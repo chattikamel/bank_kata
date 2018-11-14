@@ -25,3 +25,20 @@ Feature: Operations
       | 0      | 50     |  -50   |
       | 1000   | 500    |   500  |
       | 1500   | 100    |  1400  |
+
+
+  Scenario Outline: Check operations
+    Given A client with a bank account with following operations
+     | operation | date       | amount | balance |
+     | deposit   | 10/01/2017 | 100    | 200     |
+     | withdrawal| 01/01/2018 | 50     | 150     |
+    When He wants to check operations
+    Then the history of all operations should be printed like this
+
+    Examples:
+      | amount | money  |  value |
+      | 0      | 50     |  -50   |
+      | 1000   | 500    |   500  |
+      | 1500   | 100    |  1400  |
+
+

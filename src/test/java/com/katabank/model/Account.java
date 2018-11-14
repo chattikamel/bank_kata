@@ -21,4 +21,7 @@ public class Account {
     public void makeWithdrawal(BigDecimal amount) {
         balance = balance.subtract(amount);
     }
+
+    public void printOperations(String outputStream) {
+    }
 }
