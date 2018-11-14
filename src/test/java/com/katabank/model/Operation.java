@@ -1,6 +1,7 @@
 package com.katabank.model;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -31,6 +32,18 @@ public class Operation {
         this.balance = balance;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,9 +55,14 @@ public class Operation {
                 Objects.equals(balance, operation.balance);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(type, date, amount, balance);
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s operation on %s of %d, balance is %d", getType(), new SimpleDateFormat("dd-mm-yyyy").format(getDate()), getAmount().longValue(), getBalance().longValue());
+    }
 }

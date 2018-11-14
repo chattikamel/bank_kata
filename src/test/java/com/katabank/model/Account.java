@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Account {
 
@@ -55,6 +56,6 @@ public class Account {
     }
 
     public String printHistory() {
-        return "";
+        return operations.stream().map(operation -> operation.toString()).collect(Collectors.joining("\n"));
     }
 }
