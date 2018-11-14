@@ -44,9 +44,6 @@ public class Account {
         operations.add(operation);
     }
 
-    public void printOperations(String outputStream) {
-    }
-
     public List<Operation> getOperations() {
         return operations;
     }
