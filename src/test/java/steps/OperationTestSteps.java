@@ -8,8 +8,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import gherkin.ast.DataTable;
 
-import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
@@ -26,8 +28,8 @@ public class OperationTestSteps {
         account.setBalance(blance);
     }
 
-    @When("He makes a deposit of {}")
-    public void he_makes_a_deposit_of_on(BigDecimal amount) {
+    @When("He makes a deposit of {} on {iso-date}")
+    public void he_makes_a_deposit_of_on(BigDecimal amount, Date operationDate) {
         account.makeDeposit(amount);
     }
 
@@ -41,10 +43,15 @@ public class OperationTestSteps {
         assertThat( account.getBalance(), closeTo(newBalanceAmount, new BigDecimal(0)));
 
     }
-    @Then("a deposit operation is added to the history like this")
-    public void a_deposit_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) {
+    @Then("a deposit operation is added to the history with these values")
+    public void a_deposit_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
+        Operation operation = new Operation();
 
-        assertThat(account.getLastOperation(), equalTo(new Operation()));
+        operation.setType(dataTable.cell(0, 1));
+        operation.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(dataTable.cell(1, 1)));
+        operation.setAmount(new BigDecimal(dataTable.cell(2, 1)));
+        operation.setBalance(new BigDecimal(dataTable.cell(3, 1)));
+        assertThat(account.getLastOperation(), equalTo(operation));
     }
 
 
