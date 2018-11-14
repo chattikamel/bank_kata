@@ -6,17 +6,17 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Operation {
-    private String type;
+    private OperationType type;
     private Date date;
     private BigDecimal amount;
     private BigDecimal balance;
 
 
-    public void setType(String type) {
+    public void setType(OperationType type) {
         this.type = type;
     }
 
-    public String getType() {
+    public OperationType getType() {
         return type;
     }
 

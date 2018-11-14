@@ -3,6 +3,7 @@ package steps;
 
 import com.katabank.model.Account;
 import com.katabank.model.Operation;
+import com.katabank.model.OperationType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -48,12 +49,12 @@ public class OperationTestSteps {
     }
     @Then("a deposit operation is added to the history with these values")
     public void a_deposit_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
-        assertThat(account.getLastOperation(), is(convertToOperation(dataTable)));
+        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0,1), dataTable.cell(1,1), dataTable.cell(2,1), dataTable.cell(3,1))));
     }
 
     @Then("a withdrawal operation is added to the history with these values")
     public void a_wihdrawal_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
-        assertThat(account.getLastOperation(), is(convertToOperation(dataTable)));
+        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0,1), dataTable.cell(1,1), dataTable.cell(2,1), dataTable.cell(3,1))));
     }
 
 
@@ -62,15 +63,12 @@ public class OperationTestSteps {
         account = new Account();
         List<Operation> operations =  account.getOperations();
         dataTable.asLists().stream().skip(1).forEach(list ->  {
-           Operation operation =  new Operation();
-           operation.setType(list.get(0));
+            Operation operation = null;
             try {
-                operation.setDate(new SimpleDateFormat("dd-mm-yyyy").parse(list.get(1)));
+                operation = convertToOperation(list.get(0), list.get(1), list.get(2), list.get(3));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            operation.setAmount(new BigDecimal(list.get(2)));
-            operation.setBalance(new BigDecimal(list.get(3)));
 
             operations.add(operation);
 
@@ -96,13 +94,13 @@ public class OperationTestSteps {
         return dataTable.asList().stream().collect(Collectors.joining("\n"));
     }
 
-    private Operation convertToOperation(io.cucumber.datatable.DataTable dataTable) throws ParseException {
+    private Operation convertToOperation(String operationType, String date, String amount, String balance) throws ParseException {
         Operation operation = new Operation();
 
-        operation.setType(dataTable.cell(0, 1));
-        operation.setDate(new SimpleDateFormat("dd-mm-yyyy").parse(dataTable.cell(1, 1)));
-        operation.setAmount(new BigDecimal(dataTable.cell(2, 1)));
-        operation.setBalance(new BigDecimal(dataTable.cell(3, 1)));
+        operation.setType(OperationType.valueOf(operationType));
+        operation.setDate(new SimpleDateFormat("dd-mm-yyyy").parse(date));
+        operation.setAmount(new BigDecimal(amount));
+        operation.setBalance(new BigDecimal(balance));
         return  operation;
 
     }

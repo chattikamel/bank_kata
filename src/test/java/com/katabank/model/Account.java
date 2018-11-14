@@ -30,7 +30,7 @@ public class Account {
         operation.setAmount(amount);
         operation.setDate(operationDate);
         operation.setBalance(balance);
-        operation.setType("deposit");
+        operation.setType(OperationType.deposit);
         operations.add(operation);
     }
 
@@ -40,7 +40,7 @@ public class Account {
         operation.setAmount(amount);
         operation.setDate(operationDate);
         operation.setBalance(balance);
-        operation.setType("withdrawal");
+        operation.setType(OperationType.withdrawal);
         operations.add(operation);
     }
 
@@ -59,3 +59,4 @@ public class Account {
         return operations.stream().map(operation -> operation.toString()).collect(Collectors.joining("\n"));
     }
 }
+
