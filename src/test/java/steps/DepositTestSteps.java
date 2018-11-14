@@ -27,6 +27,11 @@ public class DepositTestSteps {
         account.makeDeposit(amount);
     }
 
+    @When("He makes a withrawal of {}")
+    public void He_makes_a_withrawal_of (BigDecimal amount) {
+
+    }
+
     @Then("the account balance should be updated with {}")
     public void the_account_s_balance_should_be_updated_with(BigDecimal newBalanceAmount) {
         assertThat( account.getBalance(), closeTo(newBalanceAmount, new BigDecimal(0)));
