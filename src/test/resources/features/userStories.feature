@@ -10,7 +10,7 @@ Feature: Operations
     Then a deposit operation is added to the history with these values
     |operation | deposit |
     |operationDate | <date> |
-    |operationAmount | <amount> |
+    |operationAmount | <money> |
     |operationBalance | <value> |
 
     Examples:

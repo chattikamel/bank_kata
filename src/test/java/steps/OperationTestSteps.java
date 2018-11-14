@@ -16,6 +16,7 @@ import java.util.Date;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class OperationTestSteps {
 
@@ -30,7 +31,7 @@ public class OperationTestSteps {
 
     @When("He makes a deposit of {} on {iso-date}")
     public void he_makes_a_deposit_of_on(BigDecimal amount, Date operationDate) {
-        account.makeDeposit(amount);
+        account.makeDeposit(amount, operationDate);
     }
 
     @When("He makes a withrawal of {}")
@@ -48,10 +49,10 @@ public class OperationTestSteps {
         Operation operation = new Operation();
 
         operation.setType(dataTable.cell(0, 1));
-        operation.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(dataTable.cell(1, 1)));
+        operation.setDate(new SimpleDateFormat("dd-mm-yyyy").parse(dataTable.cell(1, 1)));
         operation.setAmount(new BigDecimal(dataTable.cell(2, 1)));
         operation.setBalance(new BigDecimal(dataTable.cell(3, 1)));
-        assertThat(account.getLastOperation(), equalTo(operation));
+        assertThat(account.getLastOperation(), is(operation));
     }
 
 
