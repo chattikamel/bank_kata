@@ -37,6 +37,16 @@ Feature: Operations
       | 1500   | 100    |  1400  | 03-01-2018 |
 
 
+  Scenario: Check operations
+    Given A client with a bank account with following operations
+      | operation | date       | amount | balance |
+      | deposit   | 10/01/2017 | 100    | 200     |
+      | withdrawal| 01/01/2018 | 50     | 150     |
+    When He wants to check operations
+    Then the history of all operations should be printed like this ""
+
+
+
 
 
 

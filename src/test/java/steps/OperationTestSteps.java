@@ -57,6 +57,7 @@ public class OperationTestSteps {
     @Given("A client with a bank account with following operations")
     public void A_client_with_a_bank_account_with_following_operations(DataTable dataTable) {
 
+
     }
 
     @When("He wants to check operations")
