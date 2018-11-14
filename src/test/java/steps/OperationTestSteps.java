@@ -34,8 +34,8 @@ public class OperationTestSteps {
         account.makeDeposit(amount, operationDate);
     }
 
-    @When("He makes a withrawal of {}")
-    public void He_makes_a_withrawal_of (BigDecimal amount) {
+    @When("He makes a withdrawal of {} on {iso-date}")
+    public void He_makes_a_withdrawal_of (BigDecimal amount, Date operationDate) {
         account.makeWithdrawal(amount);
     }
 
@@ -46,6 +46,17 @@ public class OperationTestSteps {
     }
     @Then("a deposit operation is added to the history with these values")
     public void a_deposit_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
+        Operation operation = new Operation();
+
+        operation.setType(dataTable.cell(0, 1));
+        operation.setDate(new SimpleDateFormat("dd-mm-yyyy").parse(dataTable.cell(1, 1)));
+        operation.setAmount(new BigDecimal(dataTable.cell(2, 1)));
+        operation.setBalance(new BigDecimal(dataTable.cell(3, 1)));
+        assertThat(account.getLastOperation(), is(operation));
+    }
+
+    @Then("a withdrawal operation is added to the history with these values")
+    public void a_wihdrawal_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
         Operation operation = new Operation();
 
         operation.setType(dataTable.cell(0, 1));

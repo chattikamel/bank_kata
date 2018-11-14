@@ -22,14 +22,19 @@ Feature: Operations
 
   Scenario Outline: Make a withdrawal
     Given A client with a bank account and a balance of <amount>
-    When He makes a withrawal of <money>
+    When He makes a withdrawal of <money> on <date>
     Then the account balance should be updated with <value>
+    Then a withdrawal operation is added to the history with these values
+      |operation | withdrawal |
+      |operationDate | <date> |
+      |operationAmount | <money> |
+      |operationBalance | <value> |
 
     Examples:
-      | amount | money  |  value |
-      | 0      | 50     |  -50   |
-      | 1000   | 500    |   500  |
-      | 1500   | 100    |  1400  |
+      | amount | money  |  value | date |
+      | 0      | 50     |  -50   | 01-01-2017 |
+      | 1000   | 500    |   500  | 02-01-2017 |
+      | 1500   | 100    |  1400  | 03-01-2018 |
 
 
 
