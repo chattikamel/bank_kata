@@ -36,7 +36,7 @@ public class OperationTestSteps {
 
     @When("He makes a withdrawal of {} on {iso-date}")
     public void He_makes_a_withdrawal_of (BigDecimal amount, Date operationDate) {
-        account.makeWithdrawal(amount);
+        account.makeWithdrawal(amount, operationDate);
     }
 
     @Then("the account balance should be updated with {}")

@@ -33,8 +33,14 @@ public class Account {
         operations.add(operation);
     }
 
-    public void makeWithdrawal(BigDecimal amount) {
+    public void makeWithdrawal(BigDecimal amount, Date operationDate) {
         balance = balance.subtract(amount);
+        Operation operation =  new Operation();
+        operation.setAmount(amount);
+        operation.setDate(operationDate);
+        operation.setBalance(balance);
+        operation.setType("withdrawal");
+        operations.add(operation);
     }
 
     public void printOperations(String outputStream) {
