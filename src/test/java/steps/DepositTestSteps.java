@@ -29,7 +29,7 @@ public class DepositTestSteps {
 
     @When("He makes a withrawal of {}")
     public void He_makes_a_withrawal_of (BigDecimal amount) {
-
+        account.makeWithdrawal(amount);
     }
 
     @Then("the account balance should be updated with {}")
