@@ -1,4 +1,4 @@
-package steps;
+package com.katabank.steps;
 
 
 import com.katabank.model.Account;
@@ -12,7 +12,6 @@ import io.cucumber.datatable.DataTable;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

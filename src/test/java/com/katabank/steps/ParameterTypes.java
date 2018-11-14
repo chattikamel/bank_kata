@@ -1,9 +1,8 @@
-package steps;
+package com.katabank.steps;
 
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.cucumberexpressions.ParameterType;
-import io.cucumber.datatable.TableCellByTypeTransformer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
