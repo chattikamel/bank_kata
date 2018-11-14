@@ -2,6 +2,7 @@ package steps;
 
 
 import com.katabank.model.Account;
+import com.katabank.model.Operation;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 
 public class OperationTestSteps {
 
@@ -39,6 +41,12 @@ public class OperationTestSteps {
         assertThat( account.getBalance(), closeTo(newBalanceAmount, new BigDecimal(0)));
 
     }
+    @Then("a deposit operation is added to the history like this")
+    public void a_deposit_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) {
+
+        assertThat(account.getLastOperation(), equalTo(new Operation()));
+    }
+
 
     @Given("A client with a bank account with following operations")
     public void A_client_with_a_bank_account_with_following_operations(DataTable dataTable) {

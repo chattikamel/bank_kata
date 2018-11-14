@@ -5,14 +5,19 @@ Feature: Operations
 
   Scenario Outline: Make a deposit
     Given A client with a bank account and a balance of <amount>
-    When He makes a deposit of <money>
+    When He makes a deposit of <money> on <date>
     Then the account balance should be updated with <value>
+    Then a deposit operation is added to the history like this
+    |operation | deposit |
+    |operationDate | <date> |
+    |operationAmount | <amount> |
+    |operationBalance | <value> |
 
     Examples:
-      | amount | money  |  value |
-      | 0      | 100    |  100   |
-      | 1000   | 500    |  1500  |
-      | 1500   | 100    |  1600  |
+      | amount | money  |  value | date |
+      | 0      | 100    |  100   | 01/01/2017 |
+      | 1000   | 500    |  1500  | 02/01/2017 |
+      | 1500   | 100    |  1600  | 03/01/2018 |
 
 
   Scenario Outline: Make a withdrawal
