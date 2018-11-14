@@ -40,10 +40,14 @@ Feature: Operations
   Scenario: Check operations
     Given A client with a bank account with following operations
       | operation | date       | amount | balance |
-      | deposit   | 10/01/2017 | 100    | 200     |
-      | withdrawal| 01/01/2018 | 50     | 150     |
+      | deposit   | 10-01-2017 | 100    | 200     |
+      | withdrawal| 01-01-2018 | 50     | 150     |
+      | deposit   | 02-02-2017 | 100    | 250     |
     When He wants to check operations
-    Then the history of all operations should be printed like this ""
+    Then the history of all operations should be printed like this
+     | deposit operation on 10-01-2017 of 100, balance is 200 |
+     | withdrawal operation on 01-01-2018 of 50, balance is 150 |
+     | deposit operation on 02-02-2017 of 100, balance is 250 |
 
 
 

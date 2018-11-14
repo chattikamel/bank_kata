@@ -6,12 +6,15 @@ import com.katabank.model.Operation;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gherkin.ast.DataTable;
+import io.cucumber.datatable.DataTable;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
@@ -55,7 +58,24 @@ public class OperationTestSteps {
 
 
     @Given("A client with a bank account with following operations")
-    public void A_client_with_a_bank_account_with_following_operations(DataTable dataTable) {
+    public void A_client_with_a_bank_account_with_following_operations(io.cucumber.datatable.DataTable dataTable)  {
+        account = new Account();
+        List<Operation> operations =  account.getOperations();
+        dataTable.asLists().stream().skip(1).forEach(list ->  {
+           Operation operation =  new Operation();
+           operation.setType(list.get(0));
+            try {
+                operation.setDate(new SimpleDateFormat("dd-mm-yyyy").parse(list.get(1)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            operation.setAmount(new BigDecimal(list.get(2)));
+            operation.setBalance(new BigDecimal(list.get(3)));
+
+            operations.add(operation);
+
+        });
+
 
 
     }
@@ -63,11 +83,17 @@ public class OperationTestSteps {
     @When("He wants to check operations")
     public void He_wants_to_check_operations () {
 
+
     }
 
     @Then("the history of all operations should be printed like this")
-    public void the_history_of_all_operations_should_be_printed_like_this (String outputStream){
-       account.printOperations(outputStream );
+    public void the_history_of_all_operations_should_be_printed_like_this (io.cucumber.datatable.DataTable dataTable){
+        assertThat(account.getOperations().size(), is(3));
+        assertThat(account.printHistory(), is(expectedValue(dataTable)));
+    }
+
+    private String expectedValue(DataTable dataTable) {
+        return dataTable.asList().stream().collect(Collectors.joining("\n"));
     }
 
     private Operation convertToOperation(io.cucumber.datatable.DataTable dataTable) throws ParseException {

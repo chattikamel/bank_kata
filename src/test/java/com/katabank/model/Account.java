@@ -53,4 +53,8 @@ public class Account {
     public Operation getLastOperation() {
         return operations.get(operations.size()-1);
     }
+
+    public String printHistory() {
+        return "";
+    }
 }

@@ -46,4 +46,5 @@ public class Operation {
     public int hashCode() {
         return Objects.hash(type, date, amount, balance);
     }
+
 }
