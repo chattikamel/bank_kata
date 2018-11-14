@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
-public class DepositTestSteps {
+public class OperationTestSteps {
 
     private Account account;
 
