@@ -23,7 +23,8 @@ public class DepositTestSteps {
     }
 
     @When("He makes a deposit of {}")
-    public void he_makes_a_deposit_of_on(BigDecimal int1) {
+    public void he_makes_a_deposit_of_on(BigDecimal amount) {
+        account.makeDeposit(amount);
     }
 
     @Then("the account balance should be updated with {}")

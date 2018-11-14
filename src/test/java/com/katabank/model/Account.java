@@ -13,4 +13,8 @@ public class Account {
     public BigDecimal getBalance() {
         return balance;
     }
+
+    public void makeDeposit(BigDecimal amount) {
+        balance = balance.add(amount);
+    }
 }
