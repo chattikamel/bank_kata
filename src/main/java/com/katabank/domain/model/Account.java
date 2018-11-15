@@ -26,21 +26,21 @@ public class Account {
 
     public void makeDeposit(BigDecimal amount, Date operationDate) {
         balance = balance.add(amount);
-        Operation operation =  new Operation();
-        operation.setAmount(amount);
-        operation.setDate(operationDate);
-        operation.setBalance(balance);
-        operation.setType(OperationType.deposit);
-        operations.add(operation);
+        logOperation(amount, operationDate, OperationType.deposit);
     }
+
 
     public void makeWithdrawal(BigDecimal amount, Date operationDate) {
         balance = balance.subtract(amount);
-        Operation operation =  new Operation();
+        logOperation(amount, operationDate, OperationType.withdrawal);
+    }
+
+    private void logOperation(BigDecimal amount, Date operationDate, OperationType deposit) {
+        Operation operation = new Operation();
         operation.setAmount(amount);
         operation.setDate(operationDate);
         operation.setBalance(balance);
-        operation.setType(OperationType.withdrawal);
+        operation.setType(deposit);
         operations.add(operation);
     }
 
