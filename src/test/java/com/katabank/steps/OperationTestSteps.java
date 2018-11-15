@@ -1,9 +1,9 @@
 package com.katabank.steps;
 
 
-import com.katabank.model.Account;
-import com.katabank.model.Operation;
-import com.katabank.model.OperationType;
+import com.katabank.domain.model.Account;
+import com.katabank.domain.model.Operation;
+import com.katabank.domain.model.OperationType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
