@@ -37,31 +37,32 @@ public class OperationTestSteps {
     }
 
     @When("He makes a withdrawal of {} on {iso-date}")
-    public void He_makes_a_withdrawal_of (BigDecimal amount, Date operationDate) {
+    public void He_makes_a_withdrawal_of(BigDecimal amount, Date operationDate) {
         account.makeWithdrawal(amount, operationDate);
     }
 
     @Then("the account balance should be updated with {}")
     public void the_account_s_balance_should_be_updated_with(BigDecimal newBalanceAmount) {
-        assertThat( account.getBalance(), closeTo(newBalanceAmount, new BigDecimal(0)));
+        assertThat(account.getBalance(), closeTo(newBalanceAmount, new BigDecimal(0)));
 
     }
+
     @Then("a deposit operation is added to the history with these values")
     public void a_deposit_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
-        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0,1), dataTable.cell(1,1), dataTable.cell(2,1), dataTable.cell(3,1))));
+        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0, 1), dataTable.cell(1, 1), dataTable.cell(2, 1), dataTable.cell(3, 1))));
     }
 
     @Then("a withdrawal operation is added to the history with these values")
     public void a_wihdrawal_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
-        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0,1), dataTable.cell(1,1), dataTable.cell(2,1), dataTable.cell(3,1))));
+        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0, 1), dataTable.cell(1, 1), dataTable.cell(2, 1), dataTable.cell(3, 1))));
     }
 
 
     @Given("A client with a bank account with following operations")
-    public void A_client_with_a_bank_account_with_following_operations(io.cucumber.datatable.DataTable dataTable)  {
+    public void A_client_with_a_bank_account_with_following_operations(io.cucumber.datatable.DataTable dataTable) {
         account = new Account();
-        List<Operation> operations =  account.getOperations();
-        dataTable.asLists().stream().skip(1).forEach(list ->  {
+        List<Operation> operations = account.getOperations();
+        dataTable.asLists().stream().skip(1).forEach(list -> {
             Operation operation = null;
             try {
                 operation = convertToOperation(list.get(0), list.get(1), list.get(2), list.get(3));
@@ -74,17 +75,16 @@ public class OperationTestSteps {
         });
 
 
-
     }
 
     @When("He wants to check operations")
-    public void He_wants_to_check_operations () {
+    public void He_wants_to_check_operations() {
 
 
     }
 
     @Then("the history of all operations should be printed like this")
-    public void the_history_of_all_operations_should_be_printed_like_this (io.cucumber.datatable.DataTable dataTable){
+    public void the_history_of_all_operations_should_be_printed_like_this(io.cucumber.datatable.DataTable dataTable) {
         assertThat(account.getOperations().size(), is(3));
         assertThat(account.printHistory(), is(expectedValue(dataTable)));
     }
@@ -94,13 +94,9 @@ public class OperationTestSteps {
     }
 
     private Operation convertToOperation(String operationType, String date, String amount, String balance) throws ParseException {
-        Operation operation = new Operation();
-
-        operation.setType(OperationType.valueOf(operationType));
-        operation.setDate(new SimpleDateFormat("dd-mm-yyyy").parse(date));
-        operation.setAmount(new BigDecimal(amount));
-        operation.setBalance(new BigDecimal(balance));
-        return  operation;
+        return Operation.OperationBuilder.anOperation()
+                .withType(OperationType.valueOf(operationType)).withBalance(new BigDecimal(balance)).withDate(new SimpleDateFormat("dd-mm-yyyy").parse(date))
+                .withAmount(new BigDecimal(amount)).build();
 
     }
 

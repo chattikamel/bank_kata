@@ -36,12 +36,9 @@ public class Account {
     }
 
     private void logOperation(BigDecimal amount, Date operationDate, OperationType deposit) {
-        Operation operation = new Operation();
-        operation.setAmount(amount);
-        operation.setDate(operationDate);
-        operation.setBalance(balance);
-        operation.setType(deposit);
-        operations.add(operation);
+        operations.add(Operation.OperationBuilder.anOperation()
+                .withType(deposit).withBalance(balance).withDate(operationDate)
+                .withAmount(amount).build());
     }
 
     public List<Operation> getOperations() {
@@ -49,7 +46,7 @@ public class Account {
     }
 
     public Operation getLastOperation() {
-        return operations.get(operations.size()-1);
+        return operations.get(operations.size() - 1);
     }
 
     public String printHistory() {

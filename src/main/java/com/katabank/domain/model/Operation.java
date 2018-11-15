@@ -6,30 +6,15 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Operation {
+
     private OperationType type;
     private Date date;
     private BigDecimal amount;
     private BigDecimal balance;
 
 
-    public void setType(OperationType type) {
-        this.type = type;
-    }
-
     public OperationType getType() {
         return type;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
     }
 
     public Date getDate() {
@@ -64,5 +49,48 @@ public class Operation {
     @Override
     public String toString() {
         return String.format("%s operation on %s of %d, balance is %d", getType(), new SimpleDateFormat("dd-mm-yyyy").format(getDate()), getAmount().longValue(), getBalance().longValue());
+    }
+
+    public static final class OperationBuilder {
+        private OperationType type;
+        private Date date;
+        private BigDecimal amount;
+        private BigDecimal balance;
+
+        private OperationBuilder() {
+        }
+
+        public static OperationBuilder anOperation() {
+            return new OperationBuilder();
+        }
+
+        public OperationBuilder withType(OperationType type) {
+            this.type = type;
+            return this;
+        }
+
+        public OperationBuilder withDate(Date date) {
+            this.date = date;
+            return this;
+        }
+
+        public OperationBuilder withAmount(BigDecimal amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public OperationBuilder withBalance(BigDecimal balance) {
+            this.balance = balance;
+            return this;
+        }
+
+        public Operation build() {
+            Operation operation = new Operation();
+            operation.type = this.type;
+            operation.amount = this.amount;
+            operation.balance = this.balance;
+            operation.date = this.date;
+            return operation;
+        }
     }
 }
