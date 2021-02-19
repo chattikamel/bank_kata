@@ -5,7 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import static java.lang.String.format;
+
 public class Operation {
+
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-mm-yyyy");
 
     private OperationType type;
     private Date date;
@@ -48,7 +52,11 @@ public class Operation {
 
     @Override
     public String toString() {
-        return String.format("%s operation on %s of %d, balance is %d", getType(), new SimpleDateFormat("dd-mm-yyyy").format(getDate()), getAmount().longValue(), getBalance().longValue());
+        return format("%s operation on %s of %d, balance is %d",
+                getType(),
+                SIMPLE_DATE_FORMAT.format(getDate()),
+                getAmount().longValue(),
+                getBalance().longValue());
     }
 
     public static final class OperationBuilder {

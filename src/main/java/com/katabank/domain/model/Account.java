@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.joining;
+
 public class Account {
 
     private BigDecimal balance;
@@ -50,7 +52,9 @@ public class Account {
     }
 
     public String printHistory() {
-        return operations.stream().map(operation -> operation.toString()).collect(Collectors.joining("\n"));
+        return operations.stream()
+                .map(Operation::toString)
+                .collect(joining("\n"));
     }
 }
 

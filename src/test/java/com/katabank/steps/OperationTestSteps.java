@@ -11,11 +11,11 @@ import io.cucumber.datatable.DataTable;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.katabank.domain.model.Operation.SIMPLE_DATE_FORMAT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
@@ -49,12 +49,12 @@ public class OperationTestSteps {
 
     @Then("a deposit operation is added to the history with these values")
     public void a_deposit_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
-        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0, 1), dataTable.cell(1, 1), dataTable.cell(2, 1), dataTable.cell(3, 1))));
+        assertThat(account.getLastOperation(), is(toOperation(dataTable)));
     }
 
     @Then("a withdrawal operation is added to the history with these values")
     public void a_wihdrawal_operation_is_added_to_the_history(io.cucumber.datatable.DataTable dataTable) throws ParseException {
-        assertThat(account.getLastOperation(), is(convertToOperation(dataTable.cell(0, 1), dataTable.cell(1, 1), dataTable.cell(2, 1), dataTable.cell(3, 1))));
+        assertThat(account.getLastOperation(), is(toOperation(dataTable)));
     }
 
 
@@ -93,9 +93,18 @@ public class OperationTestSteps {
         return dataTable.asList().stream().collect(Collectors.joining("\n"));
     }
 
+    private Operation toOperation(DataTable dataTable) throws ParseException {
+        return convertToOperation(dataTable.cell(0, 1),
+                dataTable.cell(1, 1),
+                dataTable.cell(2, 1),
+                dataTable.cell(3, 1));
+    }
+
     private Operation convertToOperation(String operationType, String date, String amount, String balance) throws ParseException {
         return Operation.OperationBuilder.anOperation()
-                .withType(OperationType.valueOf(operationType)).withBalance(new BigDecimal(balance)).withDate(new SimpleDateFormat("dd-mm-yyyy").parse(date))
+                .withType(OperationType.valueOf(operationType))
+                .withBalance(new BigDecimal(balance))
+                .withDate(SIMPLE_DATE_FORMAT.parse(date))
                 .withAmount(new BigDecimal(amount)).build();
 
     }
